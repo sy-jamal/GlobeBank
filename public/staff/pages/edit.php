@@ -10,14 +10,27 @@
 
     if(is_post_request())
     {
-        $page_name=$_POST['page_name']??'';
-        $postion=$_POST['position']??'';
-        $visible=$_POST['visible']??'';
+        $page['id']= $id;
+        $page['menu_name']=$_POST['page_name']??'';
+        $page['subject_id']=$_POST['subject_id']??'';
+        $page['position']=$_POST['position']??'';
+        $page['visible']=$_POST['visible']??'';
+        $page['content']=$_POST['content']??'';
 
-        echo "Form parameters are <br>";
-        echo "Page Name".$page_name."<br>";
-        echo "Position".$postion."<br>";
-        echo "Visible".$visible.'<br>';
+        // echo "Form parameters are <br>";
+        // echo "Page Name".$page_name."<br>";
+        // echo "Position".$postion."<br>";
+        // echo "Visible".$position.'<br>';
+        update_page($page);
+        redirect_to("/staff/pages/show.php?id=".$id);
+
+    }
+    else
+    {
+        $page= find_page_by_id($id);
+        $page_set= find_all_pages();
+        $page_count= mysqli_num_rows($page_set);
+        $subject_set=find_all_subjects();
     }
 ?> 
 
@@ -32,14 +45,43 @@
 
         <form action="<?php echo url_for('/staff/pages/edit.php?id='.$id);?>" method ='Post'>
             <dl>
-                <dt>Page  Name</dt>
-                <dd> <input type="text" name="page_name" value="<?php echo h($page_name); ?>"/></dd>
+                <dt>Menu Name</dt>
+                <dd> <input type="text" name="page_name" value="<?php echo h($page['menu_name']); ?>"/></dd>
+            </dl>
+            <dl>
+                <dt>Subject</dt>
+                <dd>
+                    <select name="subject_id">
+                        <?php 
+                            while($subject=mysqli_fetch_assoc($subject_set))
+                            {
+                                echo "<option value =\"{$subject['id']}\""; 
+                                if($subject['id']==$page['subject_id'] )
+                                {
+                                    echo 'selected';
+                                }
+
+                               echo ">{$subject['menu_name']}</option>";                                
+                            }
+                        ?>
+                    </select>
+                </dd>
             </dl>
             <dl>
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-                        <option value="1"<?php if($postion=="1"){echo "selected";}?>>1</option>
+                    <?php  
+                        for($i=1;$i<=$page_count; $i++)
+                        {
+                            echo "<option value=\"{$i}\"";
+                            if($page['position']==$i)
+                            {
+                                echo "selected";
+                            }
+                            echo ">{$i}</option>";
+                        }
+                    ?>
                     </select>
                 </dd>
             </dl>
@@ -50,6 +92,11 @@
                     <input type="checkbox" name="visible" value="1"<?php if($visible=="1"){echo 'checked';}?>>
 
                 </dd>
+            </dl>
+            <dl>
+                <dt>Content</dt>
+                <dd> <input type="text" name="content" value="<?php echo h($page['content']); ?>"/></dd>
+
             </dl>
             <div id="operations"> 
                 <input type="submit" value=" Edit Page ">

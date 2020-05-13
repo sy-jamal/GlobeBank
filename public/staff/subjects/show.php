@@ -7,20 +7,34 @@
 ?>
 
 <?php require(SHARED_PATH.'/staff_header.php'); ?>
+<?php 
+    $result= find_subject_by_id($id);
+?>
 
 <div id='content'>
-<a class='action' href="<?php echo url_for('staff/pages/index.php') ;?>"><<--Go back to previous page</a> <br /> <br />
+<a class='action' href="<?php echo url_for('staff/subjects/index.php') ;?>"><<--Go back to previous page</a> <br /> <br />
 
-<?php
+<div class ="subject show">
+    <h1>Subject: <?php echo h($result['menu_name']); ?></h1>
+    <div class="attributes">
+        <dl>
+            <dt>Menu Name</dt>
+            <dd><?php echo h($result['menu_name']); ?></dd>
+        </dl>
+        <dl>
+            <dt>Position</dt>
+            <dd><?php echo h($result['position']); ?></dd>
+        </dl>
+        <dl>
+            <dt>Visible</dt>
+            <dd><?php echo $result['visible']=='1'?'true':'false'; ?></dd>
 
-    // h() deals with unintentional html chars function.php 
-    echo h($id);
-
-?>
+        </dl>
+    </div>
+</div>
 </div>
 
 
 <br />
-<a href="show.php?name=<?php echo u('jonh doe');?>">Link</a> <br />
 
 <?php require(SHARED_PATH.'/staff_footer.php'); ?>

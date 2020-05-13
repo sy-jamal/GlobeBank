@@ -2,7 +2,6 @@
 
 <?php
       $subject_set= find_all_subjects();
-      confirm_result_set($subject_set);
 ?>
 
 <?php $page_title= 'Subjects'; ?>
@@ -13,7 +12,7 @@
             <h1>Subjects</h1>
 
             <div class="actions">
-                  <a class ="actions" href="<?php echo url_for('/staff/subjects/new.php');?>">Create New Subject</a>
+                  <a class ="actions" href="<?php echo url_for('/staff/subjects/new.php');?>">Create New Subject</a> <br /> <br />
             </div>
 
             <table class="list">
@@ -36,7 +35,7 @@
                               
                               <td><a  class="action" href=" <?php echo url_for('/staff/subjects/show.php?id='.h(u($subject['id'])));?> ">View</a> </td>
                               <td><a  class="action" href="<?php echo url_for('/staff/subjects/edit.php?id='.h(u($subject['id'])));?>">Edit</a> </td>
-                              <td><a  class="action" href="">Delete</a> </td>
+                              <td><a  class="action" href="<?php echo url_for('/staff/subjects/delete.php?id='.h(u($subject['id'])));?>">Delete</a> </td>
 
                         </tr>
                   <?php } ?>
