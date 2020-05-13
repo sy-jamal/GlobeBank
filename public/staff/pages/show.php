@@ -10,7 +10,8 @@
 <?php require(SHARED_PATH.'/staff_header.php') ?>
 
 <div id='content'>
-    <a class='action' href="<?php echo url_for('staff/pages/index.php') ;?>"><<--Go back to previous page</a> <br /> <br />
+    <a class="back-link" href="<?php echo url_for('/staff/pages/index.php');?>">&laquo; Back to List</a>
+
     <div class = 'page show'>
     <h1>Page:  <?php echo ($page['menu_name']); ?></h1>
     <div class='attribrutes'>

@@ -16,7 +16,7 @@
         // echo($page['subject_id']);
         insert_page($page);
         $page_id = mysqli_insert_id($db);
-        redirect_to("/staff/pages/show.php?=".$page_id);
+        redirect_to("/staff/pages/show.php?id=".$page_id);
 
     }
 ?>
@@ -59,6 +59,7 @@
                                 }
                                 echo ">{$subject['menu_name']}</option>";
                         }
+                        mysqli_free_result($subject_set);
                     ?>
                     </select>
                 </dd>
@@ -91,7 +92,7 @@
             </dl>
             <dl>
                 <dt>Content</dt>
-                <dd> <input type="text" name="content" value="<?php  echo h($content);?>"/></dd>
+                <dd><textarea name="content" id="" cols="60" rows="10" ></textarea></dd>
                 
             </dl>
             <div id="operations"> 

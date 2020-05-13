@@ -6,7 +6,7 @@
     $id = $_GET['id'];
     $page_name='';
     $postion='';
-    $visible=0;
+    $visible='';
 
     if(is_post_request())
     {
@@ -88,14 +88,15 @@
             <dl>
                 <dt>Visible</dt>
                 <dd>
-                    <input type="hidden" name="visible" value="0">
-                    <input type="checkbox" name="visible" value="1"<?php if($visible=="1"){echo 'checked';}?>>
+                    <input type="hidden" name="visible" value="0")?>
+                    <input type="checkbox" name="visible" value="1"<?php if($page['visible']=="1"){echo 'checked';}?>>
 
                 </dd>
             </dl>
             <dl>
                 <dt>Content</dt>
-                <dd> <input type="text" name="content" value="<?php echo h($page['content']); ?>"/></dd>
+                <dd><textarea name="content" id="" cols="60" rows="10"><?php echo h($page['content']);?></textarea></dd>
+
 
             </dl>
             <div id="operations"> 

@@ -26,7 +26,7 @@
                 <th>Position</th>
                 <th>Visible</th>
                 <th>Name</th> 
-                <th>Content</th>               
+                <!-- <th>Content</th>                -->
                 <th>&nbsp</th>
                 <th>&nbsp</th>
                 <th>&nbsp</th>  
@@ -39,10 +39,10 @@
                     <td> <?php echo h($page['position'] )?></td>
                     <td> <?php echo $page['visible']==1 ? 'True' : 'False' ?></td>
                     <td> <?php echo h($page['menu_name'] )?></td>
-                    <td> <?php echo h($page['content']) ?></td>
-                    <td><a  class="action" href="<?php echo url_for('/staff/pages/show.php?id='.$page['id']);?> ">View</a> </td>
-                    <td> <a class="action" href="<?php echo url_for('/staff/pages/edit.php?id='.$page['id']);?> ">Edit</a></td>
-                    <td> <a class="action" href="<?php echo url_for('/staff/pages/delete.php?id='.$page['id']);?>">Delete</a></td>
+                    <!-- <td> <?php echo h($page['content']) ?></td> -->
+                    <td><a  class="action" href="<?php echo url_for('/staff/pages/show.php?id='.h(u($page['id'])));?> ">View</a> </td>
+                    <td> <a class="action" href="<?php echo url_for('/staff/pages/edit.php?id='.h(u($page['id'])));?> ">Edit</a></td>
+                    <td> <a class="action" href="<?php echo url_for('/staff/pages/delete.php?id='.h(u($page['id'])));?>">Delete</a></td>
                 </tr>
             <?php } ?>
             
