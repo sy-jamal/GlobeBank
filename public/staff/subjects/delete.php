@@ -20,7 +20,7 @@
             $errors=$result;
         }
     }
-    $subject = find_subject_by_id($id);
+        $subject = find_subject_by_id($id);
     
     
 ?>
