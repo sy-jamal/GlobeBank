@@ -4,34 +4,34 @@
         redirect_to('/staff/pages/index.php');
     }
     $id = $_GET['id'];
-    $page_name='';
-    $postion='';
-    $visible='';
-
+   
     if(is_post_request())
     {
         $page['id']= $id;
-        $page['menu_name']=$_POST['page_name']??'';
+        $page['menu_name']=$_POST['menu_name']??'';
         $page['subject_id']=$_POST['subject_id']??'';
         $page['position']=$_POST['position']??'';
         $page['visible']=$_POST['visible']??'';
         $page['content']=$_POST['content']??'';
 
-        // echo "Form parameters are <br>";
-        // echo "Page Name".$page_name."<br>";
-        // echo "Position".$postion."<br>";
-        // echo "Visible".$position.'<br>';
-        update_page($page);
-        redirect_to("/staff/pages/show.php?id=".$id);
+        $result =  update_page($page);
 
+        if($result=== true)
+        {
+            redirect_to("/staff/pages/show.php?id=".$id);
+        }
+        else
+        {
+            $errors= $result;
+        }
     }
     else
     {
         $page= find_page_by_id($id);
-        $page_set= find_all_pages();
-        $page_count= mysqli_num_rows($page_set);
-        $subject_set=find_all_subjects();
     }
+    $page_set= find_all_pages();
+    $page_count= mysqli_num_rows($page_set);
+    $subject_set=find_all_subjects();
 ?> 
 
 <?php $page_title = 'Edit page'; ?>
@@ -43,10 +43,12 @@
     <div class ="subject new">
         <h1>Edit Page</h1>
 
+        <?php echo(display_errors($errors)); ?>
+
         <form action="<?php echo url_for('/staff/pages/edit.php?id='.$id);?>" method ='Post'>
             <dl>
                 <dt>Menu Name</dt>
-                <dd> <input type="text" name="page_name" value="<?php echo h($page['menu_name']); ?>"/></dd>
+                <dd> <input type="text" name="menu_name" value="<?php echo h($page['menu_name']); ?>"/></dd>
             </dl>
             <dl>
                 <dt>Subject</dt>
@@ -88,7 +90,7 @@
             <dl>
                 <dt>Visible</dt>
                 <dd>
-                    <input type="hidden" name="visible" value="0")?>
+                    <input type="hidden" name="visible" value="0">
                     <input type="checkbox" name="visible" value="1"<?php if($page['visible']=="1"){echo 'checked';}?>>
 
                 </dd>

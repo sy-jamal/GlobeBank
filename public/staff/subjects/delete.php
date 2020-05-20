@@ -9,13 +9,19 @@
     
     if(is_post_request())
     {
-        delete_subject($id);
-        redirect_to('/staff/subjects/index.php');
+        $result = delete_subject($id);         
 
+        if($result=== true)
+        {
+            redirect_to('/staff/subjects/index.php');
+        }
+        else
+        {
+            $errors=$result;
+        }
     }
-    else{
-        $subject = find_subject_by_id($id);
-    }
+    $subject = find_subject_by_id($id);
+    
     
 ?>
 
@@ -28,6 +34,7 @@
     <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php');?>">&laquo; Back to List</a>
     <div class ="subject delete">
         <h1>Delete Subject</h1>
+        <?php echo( display_errors($errors)); ?>
         <p>Are you sure you want to delete this subject</p>
         <p class="item"><?php echo h($subject['menu_name']) ?></p>
         <form action="<?php echo url_for('/staff/subjects/delete.php?id='.$id)?>" method="post">

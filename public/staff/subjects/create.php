@@ -9,10 +9,12 @@ require_once('../../../private/initialize.php');
         $subject['position'] = $_POST['position']??'';
         $subject['visible'] = $_POST['visible']??'';
 
-        insert_subject($subject);
-        $new_id = mysqli_insert_id($db);
-        redirect_to('/staff/subjects/show.php?id='.$new_id);
-
+        $result = insert_subject($subject);
+        if($result === true)
+        {
+            $new_id = mysqli_insert_id($db);
+            redirect_to('/staff/subjects/show.php?id='.$new_id);
+        }    
     }
     else
     {

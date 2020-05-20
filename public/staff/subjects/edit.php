@@ -16,16 +16,24 @@
 
         $result= update_subject($subject);
 
-        redirect_to('/staff/subjects/show.php?id='.$id);
+        if($result=== true)
+        {
+            redirect_to('/staff/subjects/show.php?id='.$id);
+        }
+        else
+        {
+            $errors = $result;
+        }
 
     }
     else
     {
         $subject = find_subject_by_id($id);
-        $subject_set = find_all_subjects();
-        $subject_count = mysqli_num_rows($subject_set);
-        mysqli_free_result($subject_set);
     }
+    $subject_set = find_all_subjects();
+    $subject_count = mysqli_num_rows($subject_set);
+    mysqli_free_result($subject_set);
+ 
 ?> 
 
 <?php $page_title = 'Edit Subject'; ?>
@@ -36,6 +44,8 @@
     <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php');?>">&laquo; Back to List</a>
     <div class ="subject new">
         <h1>Edit Page</h1>
+
+        <?php echo(display_errors($errors)); ?>
 
         <form action="<?php echo url_for('/staff/subjects/edit.php?id='.$id);?>" method ='Post'>
             <dl>
